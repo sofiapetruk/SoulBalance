@@ -19,7 +19,7 @@ public class PerfilEvolutivoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "perfil_id")
-    private Long perfil_id;
+    private Long perfilId;
 
     @Column(name = "pto_autocuidado")
     private double ptoAutocuidado;
@@ -27,13 +27,17 @@ public class PerfilEvolutivoEntity {
     @Column(name = "pto_resiliencia")
     private double ptoResiliencia;
 
-    @Column(name = "senha")
-    private String senha;
-
     @Column(name = "data_last_update")
     private LocalDateTime dataLastUpdate;
 
     @OneToMany
+    @JoinColumn(name = "fk_id_usuario", unique = true, nullable = false)
     private UsuarioEntity usuario;
+
+    @Column(name = "status_curto")
+    private String statusCurto;
+
+    @Column(name = "json_competencias", columnDefinition = "jsonb")
+    private String jsonCompetencias;
 
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.SoulBalance.entity;
 
+import br.com.fiap.SoulBalance.enun.TipoDadoSensor;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +20,11 @@ public class DadosSensorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dado_id")
-    private Long dado_id;
+    private Long dadoId;
 
     @Column(name = "tipo_dado")
-    private String tipoDado; //criar um enuns quais são os dados que o usuário pode escolher
+    @Enumerated(EnumType.STRING)
+    private TipoDadoSensor tipoDado;
 
     @Column(name = "valor")
     private int valor; //pontuação desses dados
