@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_SOULBALANCE_ATIVIDADE")
@@ -28,9 +29,9 @@ public class AtividadeEntity {
     @Column(name = "descricao")
     private String descricao;
 
-    private Instant inicio;
+    private LocalDateTime inicio;
 
-    private Instant fim;
+    private LocalDateTime fim;
 
     @Column(name = "duracao_minutos_atividade")   //criar um método nessa classe que faz a duração do inicio e fim da atividade
     private Long duracaoMinutosAtividade;

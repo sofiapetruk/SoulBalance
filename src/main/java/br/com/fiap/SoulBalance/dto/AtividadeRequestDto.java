@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,12 +19,14 @@ public class AtividadeRequestDto {
     private TipoAtividade tipoAtividade;
 
     @NotNull
-    private Instant inicio;
+    private LocalDateTime inicio;
+
+    @NotNull
+    private LocalDateTime fim;
 
     @NotBlank
     private String descricao;
 
-    @NotNull
-    private Instant fim; //ver um jeito de contar um relógio
+
 
 }

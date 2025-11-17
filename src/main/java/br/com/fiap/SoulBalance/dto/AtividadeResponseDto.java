@@ -6,6 +6,7 @@ import br.com.fiap.SoulBalance.enun.TipoAtividade;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +18,9 @@ public class AtividadeResponseDto {
 
     private TipoAtividade tipoAtividade;
 
-    private Instant inicio;
+    private LocalDateTime inicio;
 
-    private Instant fim;
+    private LocalDateTime fim;
 
     private Long duracaoMinutosAtividade;
 
