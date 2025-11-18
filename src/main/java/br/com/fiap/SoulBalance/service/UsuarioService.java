@@ -1,9 +1,7 @@
 package br.com.fiap.SoulBalance.service;
 
-import br.com.fiap.SoulBalance.dto.PerfilEvolutivoResponseDto;
 import br.com.fiap.SoulBalance.dto.UsuarioRequestDto;
 import br.com.fiap.SoulBalance.dto.UsuarioResponseDto;
-import br.com.fiap.SoulBalance.entity.PerfilEvolutivoEntity;
 import br.com.fiap.SoulBalance.entity.UsuarioEntity;
 import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.PerfilEvolutivoRepository;
@@ -24,9 +22,6 @@ public class UsuarioService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private PerfilEvolutivoRepository perfilEvolutivoRepository;
 
 
     public List<UsuarioResponseDto> getlAll() {
@@ -59,8 +54,6 @@ public class UsuarioService {
                 .dataCriacao(LocalDateTime.now())
                 .build();
 
-        savePerfil(usuario);
-
         return UsuarioResponseDto.from(usuarioRepository.save(usuario));
     }
 
@@ -82,21 +75,5 @@ public class UsuarioService {
 
         return UsuarioResponseDto.from(usuario);
     }
-
-    public PerfilEvolutivoResponseDto savePerfil(UsuarioEntity usuario) {
-        PerfilEvolutivoEntity perfilEvolutivo = PerfilEvolutivoEntity
-                .builder()
-                .ptoAutocuidado(1.0)
-                .ptoResiliencia(1.0)
-                .dataLastUpdate(LocalDateTime.now())
-                .statusCurto("Novo Usuário")
-                .jsonCompetencias("{ \"competencias\": [] }")
-                .usuario(usuario)
-                .build();
-
-        return PerfilEvolutivoResponseDto.from(perfilEvolutivoRepository.save(perfilEvolutivo));
-    }
-
-
 
 }
