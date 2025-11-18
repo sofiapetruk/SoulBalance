@@ -4,6 +4,8 @@ import br.com.fiap.SoulBalance.dto.AtividadeRequestDto;
 import br.com.fiap.SoulBalance.dto.AtividadeResponseDto;
 import br.com.fiap.SoulBalance.service.AtividadeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +47,17 @@ public class AtividadeController {
 
         return ResponseEntity.ok(atividadeList);
     }
+
+    @GetMapping("/paginacao")
+    public ResponseEntity<Page<AtividadeResponseDto>> findAllPage(
+            @RequestParam(value = "pagina", defaultValue = "0") Integer page,
+            @RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<AtividadeResponseDto> pageAbrigo = atividadeService.findAllPage(pageRequest);
+
+        return ResponseEntity.ok(pageAbrigo);
+    }
+
 }

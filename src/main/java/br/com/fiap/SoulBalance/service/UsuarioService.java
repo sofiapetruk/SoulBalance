@@ -1,5 +1,6 @@
 package br.com.fiap.SoulBalance.service;
 
+import br.com.fiap.SoulBalance.dto.DadosSensorResponseDto;
 import br.com.fiap.SoulBalance.dto.UsuarioRequestDto;
 import br.com.fiap.SoulBalance.dto.UsuarioResponseDto;
 import br.com.fiap.SoulBalance.entity.UsuarioEntity;
@@ -7,6 +8,8 @@ import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +76,11 @@ public class UsuarioService {
                 .orElseThrow(NotFoundException.forLogin(email));
 
         return UsuarioResponseDto.from(usuario);
+    }
+
+    public Page<UsuarioResponseDto> findAllPage(PageRequest request) {
+        return usuarioRepository.findAll(request)
+                .map(UsuarioResponseDto::from);
     }
 
 }

@@ -1,5 +1,6 @@
 package br.com.fiap.SoulBalance.service;
 
+import br.com.fiap.SoulBalance.dto.AtividadeResponseDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualRequestDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
 import br.com.fiap.SoulBalance.entity.CheckinManualEntity;
@@ -8,6 +9,8 @@ import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.CheckinManualRepository;
 import br.com.fiap.SoulBalance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +64,11 @@ public class CheckinManualService {
                 .stream()
                 .map(CheckinManualResponseDto::from)
                 .toList();
+    }
+
+    public Page<CheckinManualResponseDto> findAllPage(PageRequest request) {
+        return checkinManualRepository.findAll(request)
+                .map(CheckinManualResponseDto::from);
     }
 
     public int deleteUserChekin(Long userId, LocalDateTime since) {

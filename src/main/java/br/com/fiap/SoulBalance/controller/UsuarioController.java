@@ -1,10 +1,13 @@
 package br.com.fiap.SoulBalance.controller;
 
+import br.com.fiap.SoulBalance.dto.DadosSensorResponseDto;
 import br.com.fiap.SoulBalance.dto.UsuarioRequestDto;
 import br.com.fiap.SoulBalance.dto.UsuarioResponseDto;
 import br.com.fiap.SoulBalance.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,6 +58,18 @@ public class UsuarioController {
         usuarioService.delete(idUsuario);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/paginacao")
+    public ResponseEntity<Page<UsuarioResponseDto>> findAllPage(
+            @RequestParam(value = "pagina", defaultValue = "0") Integer page,
+            @RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<UsuarioResponseDto> pageAbrigo = usuarioService.findAllPage(pageRequest);
+
+        return ResponseEntity.ok(pageAbrigo);
     }
 
 

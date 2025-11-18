@@ -1,5 +1,6 @@
 package br.com.fiap.SoulBalance.service;
 
+import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
 import br.com.fiap.SoulBalance.dto.DadosSensorRequestDto;
 import br.com.fiap.SoulBalance.dto.DadosSensorResponseDto;
 import br.com.fiap.SoulBalance.entity.DadosSensorEntity;
@@ -9,6 +10,8 @@ import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.DadosSensorRepository;
 import br.com.fiap.SoulBalance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,6 +87,11 @@ public class DadosSensorService {
         return dadosDoUsuario.stream()
                 .map(DadosSensorResponseDto::from)
                 .toList();
+    }
+
+    public Page<DadosSensorResponseDto> findAllPage(PageRequest request) {
+        return dadosSensorRepository.findAll(request)
+                .map(DadosSensorResponseDto::from);
     }
 
     public void delete(Long dadoSensorId) {

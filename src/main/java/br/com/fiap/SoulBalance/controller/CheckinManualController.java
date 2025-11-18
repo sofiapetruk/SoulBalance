@@ -1,11 +1,14 @@
 package br.com.fiap.SoulBalance.controller;
 
+import br.com.fiap.SoulBalance.dto.AtividadeResponseDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualRequestDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
 import br.com.fiap.SoulBalance.entity.UsuarioEntity;
 import br.com.fiap.SoulBalance.service.CheckinManualService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -53,6 +56,18 @@ public class CheckinManualController {
         checkinManualService.deleteUserChekin(userId, since);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/paginacao")
+    public ResponseEntity<Page<CheckinManualResponseDto>> findAllPage(
+            @RequestParam(value = "pagina", defaultValue = "0") Integer page,
+            @RequestParam(value = "tamanho", defaultValue = "2") Integer size) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<CheckinManualResponseDto> pageAbrigo = checkinManualService.findAllPage(pageRequest);
+
+        return ResponseEntity.ok(pageAbrigo);
     }
 
 }

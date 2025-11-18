@@ -8,6 +8,9 @@ import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.AtividadeRepository;
 import br.com.fiap.SoulBalance.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,6 +71,11 @@ public class AtividadeService {
                 .stream()
                 .map(AtividadeResponseDto::from)
                 .toList();
+    }
+
+    public Page<AtividadeResponseDto> findAllPage(PageRequest request) {
+        return atividadeRepository.findAll(request)
+                .map(AtividadeResponseDto::from);
     }
 
 //    /**
