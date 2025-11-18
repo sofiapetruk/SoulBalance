@@ -31,7 +31,4 @@ public class RecomendacaoEntity {
     @JoinColumn(name = "fk_id_usuario")
     private UsuarioEntity usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_metrica")
-    private MetricaBemEstarEntity metrica;
 }

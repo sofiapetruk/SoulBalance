@@ -1,6 +1,5 @@
 package br.com.fiap.SoulBalance.service;
 
-import br.com.fiap.SoulBalance.dto.AtividadeResponseDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualRequestDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
 import br.com.fiap.SoulBalance.entity.CheckinManualEntity;

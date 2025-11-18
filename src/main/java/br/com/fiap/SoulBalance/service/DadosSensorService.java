@@ -1,6 +1,5 @@
 package br.com.fiap.SoulBalance.service;
 
-import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
 import br.com.fiap.SoulBalance.dto.DadosSensorRequestDto;
 import br.com.fiap.SoulBalance.dto.DadosSensorResponseDto;
 import br.com.fiap.SoulBalance.entity.DadosSensorEntity;
