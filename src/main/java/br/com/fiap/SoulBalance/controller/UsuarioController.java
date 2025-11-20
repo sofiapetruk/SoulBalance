@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioResponseDto> save(@RequestBody @Valid UsuarioRequestDto filter) {
+    public ResponseEntity<UsuarioResponseDto> save(@RequestBody @Valid UsuarioRequestDto filter) throws Exception {
         UsuarioResponseDto novoUsuario = usuarioService.save(filter);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);

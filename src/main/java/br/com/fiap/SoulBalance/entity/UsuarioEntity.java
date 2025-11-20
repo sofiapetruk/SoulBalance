@@ -3,6 +3,7 @@ package br.com.fiap.SoulBalance.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class UsuarioEntity {
     @Column(name = "senha")
     private String senha;
 
+    @CreatedDate
     @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
 

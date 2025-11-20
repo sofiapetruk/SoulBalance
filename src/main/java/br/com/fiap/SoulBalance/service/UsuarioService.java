@@ -52,7 +52,12 @@ public class UsuarioService {
     }
 
     @CachePut(value = "usuarios", key = "#result.userId")
-    public UsuarioResponseDto save(UsuarioRequestDto filter){
+    public UsuarioResponseDto save(UsuarioRequestDto filter) throws Exception {
+        if (usuarioRepository.existsByEmail(filter.getEmail())) {
+            throw new Exception("O email " + filter.getEmail() + " já está em uso.");
+        }
+
+
         UsuarioEntity usuario = UsuarioEntity
                 .builder()
                 .nome(filter.getName())
@@ -72,7 +77,6 @@ public class UsuarioService {
         usuario.setNome(filter.getName());
         usuario.setEmail(filter.getEmail());
         usuario.setSenha(passwordEncoder.encode(filter.getSenha()));
-        usuario.setDataCriacao(LocalDateTime.now());
 
         return UsuarioResponseDto.from(usuarioRepository.save(usuario));
     }

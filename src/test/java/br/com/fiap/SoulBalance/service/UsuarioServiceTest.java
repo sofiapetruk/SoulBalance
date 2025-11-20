@@ -48,7 +48,7 @@ public class UsuarioServiceTest {
 
     @Test
     @DisplayName("Deve salvar o usuário com sucesso, criptografando a senha")
-    void save_shouldSaveUserWithEncodedPasswordAndDefaultRole() {
+    void save_shouldSaveUserWithEncodedPasswordAndDefaultRole() throws Exception {
 
         when(passwordEncoder.encode(RAW_PASSWORD)).thenReturn(ENCODED_PASSWORD);
 
