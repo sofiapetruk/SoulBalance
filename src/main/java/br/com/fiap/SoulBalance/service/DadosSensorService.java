@@ -36,9 +36,8 @@ public class DadosSensorService {
      * O 'time' é gerado no servidor.
      */
     @Transactional
-    public DadosSensorResponseDto saveDado(DadosSensorRequestDto filter, Long userId) {
-        UsuarioEntity usuario = usuarioRepository.findById(userId)
-                .orElseThrow(NotFoundException.forUser(userId));
+    public DadosSensorResponseDto saveDado(DadosSensorRequestDto filter) {
+        UsuarioEntity usuario = validarUsuario(filter.getEmail());
 
         DadosSensorEntity dado = DadosSensorEntity.builder()
                 .tipoDado(filter.getTipoDadoSensor())
@@ -52,43 +51,43 @@ public class DadosSensorService {
         return DadosSensorResponseDto.from(savedDado);
     }
 
-    /**
-     * Combina múltiplos registros de sensor (ex: várias leituras de BPM ao longo do dia)
-     * para gerar um único valor diário (média/total) para uso na análise da IA.
-     * Retorna um mapa de TipoDadoSensor para o valor agregado (ex: Média de BPM ou Total de Passos).
-     */
-    @Cacheable(value = "dadosAgregados", key = "{#userId, #data}")
-    public Map<TipoDadoSensor, Double> agregarDadosDiarios(Long userId, LocalDate data) {
-
-        LocalDateTime inicioDoDia = data.atStartOfDay();
-        LocalDateTime fimDoDia = data.plusDays(1).atStartOfDay().minusNanos(1);
-
-        List<DadosSensorEntity> dadosDoDia = dadosSensorRepository
-                .findByUsuarioIdAndTimeBetween(userId, inicioDoDia, fimDoDia);
-
-        if (dadosDoDia.isEmpty()) {
-            return Map.of();
-        }
-
-        return dadosDoDia.stream()
-                .collect(Collectors.groupingBy(
-                        DadosSensorEntity::getTipoDado,
-                        Collectors.averagingInt(DadosSensorEntity::getValor)
-                ));
-    }
+//    /**
+//     * Combina múltiplos registros de sensor (ex: várias leituras de BPM ao longo do dia)
+//     * para gerar um único valor diário (média/total) para uso na análise da IA.
+//     * Retorna um mapa de TipoDadoSensor para o valor agregado (ex: Média de BPM ou Total de Passos).
+//     */
+//    @Cacheable(value = "dadosAgregados", key = "{#userId, #data}")
+//    public Map<TipoDadoSensor, Double> agregarDadosDiarios(Long userId, LocalDate data) {
+//
+//        LocalDateTime inicioDoDia = data.atStartOfDay();
+//        LocalDateTime fimDoDia = data.plusDays(1).atStartOfDay().minusNanos(1);
+//
+//        List<DadosSensorEntity> dadosDoDia = dadosSensorRepository
+//                .findByUsuarioIdAndTimeBetween(userId, inicioDoDia, fimDoDia);
+//
+//        if (dadosDoDia.isEmpty()) {
+//            return Map.of();
+//        }
+//
+//        return dadosDoDia.stream()
+//                .collect(Collectors.groupingBy(
+//                        DadosSensorEntity::getTipoDado,
+//                        Collectors.averagingInt(DadosSensorEntity::getValor)
+//                ));
+//    }
 
     /**
      * Retorna todos os registros de dados de sensor para um usuário específico,
      * ordenados por data e hora (do mais recente para o mais antigo).
      */
-    @Cacheable(value = "dadosSensorUsuarioLista", key = "#userId")
-    public List<DadosSensorResponseDto> getAll(Long userId) {
-        List<DadosSensorEntity> dadosDoUsuario = dadosSensorRepository
-                .findByUsuarioIdOrderByTimeDesc(userId);
+    @Cacheable(value = "dadosSensorUsuarioLista")
+    public List<DadosSensorResponseDto> getAll() {
+
+        List<DadosSensorEntity> dadosDoUsuario = dadosSensorRepository.findAll();
 
         return dadosDoUsuario.stream()
                 .map(DadosSensorResponseDto::from)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public Page<DadosSensorResponseDto> findAllPage(PageRequest request) {
@@ -98,8 +97,14 @@ public class DadosSensorService {
 
     public void delete(Long dadoSensorId) {
         DadosSensorEntity dadosSensor = dadosSensorRepository.findById(dadoSensorId)
+
                 .orElseThrow(NotFoundException.forDadoSensor(dadoSensorId));
 
         dadosSensorRepository.delete(dadosSensor);
+    }
+
+    private UsuarioEntity validarUsuario(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(NotFoundException.forEmail(email));
     }
 }

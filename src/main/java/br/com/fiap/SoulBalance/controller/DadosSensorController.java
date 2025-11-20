@@ -27,42 +27,39 @@ public class DadosSensorController {
     private DadosSensorService dadosSensorService;
 
     @PostMapping
-    public ResponseEntity<DadosSensorResponseDto> saveDado(
-            @RequestBody @Valid DadosSensorRequestDto filter,
-            @AuthenticationPrincipal UsuarioEntity usuarioLogado) {
+    public ResponseEntity<DadosSensorResponseDto> saveDado(@RequestBody @Valid DadosSensorRequestDto filter) {
 
-        DadosSensorResponseDto dadosSensorResponseDto = dadosSensorService.saveDado(filter, usuarioLogado.getId());
+        DadosSensorResponseDto dadosSensorResponseDto = dadosSensorService.saveDado(filter);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(dadosSensorResponseDto);
     }
 
     @GetMapping()
-    public ResponseEntity<List<DadosSensorResponseDto>> getAllByUsuario(
-            @AuthenticationPrincipal UsuarioEntity usuarioLogado) {
+    public ResponseEntity<List<DadosSensorResponseDto>> getAllByUsuario() {
 
-        List<DadosSensorResponseDto> dados = dadosSensorService.getAll(usuarioLogado.getId());
+        List<DadosSensorResponseDto> dados = dadosSensorService.getAll();
 
         return ResponseEntity.ok(dados);
     }
 
-    @GetMapping("/agregados")
-    public ResponseEntity<Map<TipoDadoSensor, Double>> agregarDadosDiarios(
-            @AuthenticationPrincipal UsuarioEntity usuarioLogado,
-            @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
-
-        Map<TipoDadoSensor, Double> agregados = dadosSensorService.agregarDadosDiarios(
-                usuarioLogado.getId(),
-                data
-        );
-
-        return ResponseEntity.ok(agregados);
-    }
+//    @GetMapping("/agregados")
+//    public ResponseEntity<Map<TipoDadoSensor, Double>> agregarDadosDiarios(
+//            @AuthenticationPrincipal UsuarioEntity usuarioLogado,
+//            @RequestParam("data") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+//
+//        Map<TipoDadoSensor, Double> agregados = dadosSensorService.agregarDadosDiarios(
+//                usuarioLogado.getId(),
+//                data
+//        );
+//
+//        return ResponseEntity.ok(agregados);
+//    }
 
     @DeleteMapping("/{idDadoSensor}")
-    public void delete(Long idDadoSensor) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long idDadoSensor) {
         dadosSensorService.delete(idDadoSensor);
     }
-
     @GetMapping("/paginacao")
     public ResponseEntity<Page<DadosSensorResponseDto>> findAllPage(
             @RequestParam(value = "pagina", defaultValue = "0") Integer page,

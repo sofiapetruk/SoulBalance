@@ -16,6 +16,4 @@ public interface DadosSensorRepository extends JpaRepository<DadosSensorEntity, 
             LocalDateTime endTime
     );
 
-    List<DadosSensorEntity> findByUsuarioIdOrderByTimeDesc(Long userId);
-
 }
