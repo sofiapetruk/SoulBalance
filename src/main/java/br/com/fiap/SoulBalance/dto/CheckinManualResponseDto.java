@@ -1,7 +1,6 @@
 package br.com.fiap.SoulBalance.dto;
 
 import br.com.fiap.SoulBalance.entity.CheckinManualEntity;
-import br.com.fiap.SoulBalance.entity.UsuarioEntity;
 import br.com.fiap.SoulBalance.enun.ValorEnun;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -37,7 +36,6 @@ public class CheckinManualResponseDto {
                 .energia(checkinManual.getEnergia())
                 .foco(checkinManual.getFoco())
                 .time(checkinManual.getTime())
-//                .usuario(checkinManual.getUsuario().getNome())
                 .usuario(checkinManual.getUsuario().getEmail())
                 .build();
     }

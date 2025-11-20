@@ -4,7 +4,6 @@ import br.com.fiap.SoulBalance.enun.TipoAtividade;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -33,7 +32,7 @@ public class AtividadeEntity {
 
     private LocalDateTime fim;
 
-    @Column(name = "duracao_minutos_atividade")   //criar um método nessa classe que faz a duração do inicio e fim da atividade
+    @Column(name = "duracao_minutos_atividade")
     private Long duracaoMinutosAtividade;
 
     @ManyToOne

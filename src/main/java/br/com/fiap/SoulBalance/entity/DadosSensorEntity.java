@@ -27,7 +27,7 @@ public class DadosSensorEntity {
     private TipoDadoSensor tipoDado;
 
     @Column(name = "valor")
-    private int valor; //pontuação desses dados
+    private int valor;
 
     @Column(name = "time")
     private LocalDateTime time;

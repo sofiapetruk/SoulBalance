@@ -1,12 +1,9 @@
 package br.com.fiap.SoulBalance.dto;
 
 import br.com.fiap.SoulBalance.entity.AtividadeEntity;
-import br.com.fiap.SoulBalance.entity.UsuarioEntity;
 import br.com.fiap.SoulBalance.enun.TipoAtividade;
 import lombok.*;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor

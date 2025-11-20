@@ -4,7 +4,6 @@ import br.com.fiap.SoulBalance.dto.DadosSensorRequestDto;
 import br.com.fiap.SoulBalance.dto.DadosSensorResponseDto;
 import br.com.fiap.SoulBalance.entity.DadosSensorEntity;
 import br.com.fiap.SoulBalance.entity.UsuarioEntity;
-import br.com.fiap.SoulBalance.enun.TipoDadoSensor;
 import br.com.fiap.SoulBalance.exception.NotFoundException;
 import br.com.fiap.SoulBalance.repository.DadosSensorRepository;
 import br.com.fiap.SoulBalance.repository.UsuarioRepository;
@@ -15,10 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
