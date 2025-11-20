@@ -18,9 +18,7 @@ public class AtividadeResponseDto {
 
     private TipoAtividade tipoAtividade;
 
-    private LocalDateTime inicio;
-
-    private LocalDateTime fim;
+    private String descricao;
 
     private Long duracaoMinutosAtividade;
 
@@ -30,8 +28,8 @@ public class AtividadeResponseDto {
         return AtividadeResponseDto
                 .builder()
                 .atividadeId(atividade.getAtividadeId())
-                .inicio(atividade.getInicio())
-                .fim(atividade.getFim())
+                .tipoAtividade(atividade.getTipoAtividade())
+                .descricao(atividade.getDescricao())
                 .duracaoMinutosAtividade(atividade.getDuracaoMinutosAtividade())
                 .usuarioId(atividade.getUsuario().getId())
                 .build();

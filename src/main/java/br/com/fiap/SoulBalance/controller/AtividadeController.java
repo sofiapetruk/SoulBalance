@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,26 +21,22 @@ public class AtividadeController {
     private AtividadeService atividadeService;
 
 
-    @PostMapping("/users/{userId}/atividades")
-    public ResponseEntity<AtividadeResponseDto> saveAtividade(
-            @PathVariable Long userId,
-            @RequestBody @Valid AtividadeRequestDto atividadeRequestDto) {
+    @PostMapping()
+    public ResponseEntity<AtividadeResponseDto> saveAtividade(@RequestBody @Valid AtividadeRequestDto atividadeRequestDto) {
 
-        AtividadeResponseDto response = atividadeService.saveAtividade(atividadeRequestDto, userId);
+        AtividadeResponseDto response = atividadeService.saveAtividade(atividadeRequestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/users/{userId}/atividades/historico")
-    public ResponseEntity<List<AtividadeResponseDto>> buscarHistoricoPorPeriodo(
-            @PathVariable Long userId,
-            @RequestParam LocalDateTime inicio,
-            @RequestParam LocalDateTime fim) {
+    @GetMapping("/users/{userId}/{atividadeId}/historico")
+    public ResponseEntity<AtividadeResponseDto> buscarHistoricoPorPeriodo(
+            @PathVariable Long userId, @PathVariable Long atividadeId) {
 
-        List<AtividadeResponseDto> historico = atividadeService.buscarHistoricoPorPeriodo(userId, inicio, fim);
+        AtividadeResponseDto historico = atividadeService.buscarHistoricoPorPeriodo(userId, atividadeId);
         return ResponseEntity.ok(historico);
     }
 
-    @GetMapping("/atividades")
+    @GetMapping()
     public ResponseEntity<List<AtividadeResponseDto>> getAll() {
         List<AtividadeResponseDto> atividadeList = atividadeService.getAll();
 
