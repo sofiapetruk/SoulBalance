@@ -1,6 +1,8 @@
 package br.com.fiap.SoulBalance.dto;
 
 import br.com.fiap.SoulBalance.enun.ValorEnun;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -20,4 +22,9 @@ public class CheckinManualRequestDto {
 
     @NotNull
     private ValorEnun foco;
+
+    @Email
+    @NotBlank
+    private String email;
+
 }

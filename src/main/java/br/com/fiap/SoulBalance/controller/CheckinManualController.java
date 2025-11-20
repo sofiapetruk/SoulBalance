@@ -2,8 +2,10 @@ package br.com.fiap.SoulBalance.controller;
 
 import br.com.fiap.SoulBalance.dto.CheckinManualRequestDto;
 import br.com.fiap.SoulBalance.dto.CheckinManualResponseDto;
+import br.com.fiap.SoulBalance.dto.UsuarioResponseDto;
 import br.com.fiap.SoulBalance.entity.UsuarioEntity;
 import br.com.fiap.SoulBalance.service.CheckinManualService;
+import br.com.fiap.SoulBalance.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,20 +26,24 @@ public class CheckinManualController {
     @Autowired
     private CheckinManualService checkinManualService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping
     public ResponseEntity<CheckinManualResponseDto> saveChekin(
-            @RequestBody @Valid CheckinManualRequestDto filter,
-            @AuthenticationPrincipal UsuarioEntity usuarioLogado) {
+            @RequestBody @Valid CheckinManualRequestDto filter) {
 
-        CheckinManualResponseDto checkinManualResponseDto = checkinManualService.saveChekin(filter, usuarioLogado.getId());
+        CheckinManualResponseDto checkinManualResponseDto = checkinManualService.saveChekin(filter);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(checkinManualResponseDto);
     }
 
-    @GetMapping("/historico")
-    public ResponseEntity<List<CheckinManualResponseDto>> getAllByUsuario(@AuthenticationPrincipal UsuarioEntity usuarioLogado) {
+    @GetMapping("/historico/{idUsuario}")
+    public ResponseEntity<List<CheckinManualResponseDto>> getAllByUsuario(@PathVariable Long idUsuario) {
 
-        List<CheckinManualResponseDto> historico = checkinManualService.getAllByUsuario(usuarioLogado.getId());
+        UsuarioResponseDto usuario = usuarioService.getById(idUsuario);
+
+        List<CheckinManualResponseDto> historico = checkinManualService.getAllByUsuario(usuario.getUserId());
 
         return ResponseEntity.ok(historico);
     }
@@ -50,9 +56,9 @@ public class CheckinManualController {
         return ResponseEntity.ok(chekinList);
     }
 
-    @DeleteMapping("/users/{userId}/chekins")
-    public ResponseEntity<Void> deleteChekins(@PathVariable Long userId, @PathVariable LocalDateTime since) {
-        checkinManualService.deleteUserChekin(userId, since);
+    @DeleteMapping("/users/{userId}/{chekinId}/chekins")
+    public ResponseEntity<Void> deleteChekins(@PathVariable Long userId, @PathVariable Long chekinId) {
+        checkinManualService.deleteUserChekin(userId, chekinId);
 
         return ResponseEntity.noContent().build();
     }

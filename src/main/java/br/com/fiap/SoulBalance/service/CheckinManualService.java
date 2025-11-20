@@ -31,10 +31,9 @@ public class CheckinManualService {
      * Salva o humor, energia e foco do usuário logado e dispara a análise da IA.
      */
     @Transactional
-    @CacheEvict(value = "historicoCheckin", key = "#userId")
-    public CheckinManualResponseDto saveChekin(CheckinManualRequestDto filter, Long userId) {
-        UsuarioEntity usuario = usuarioRepository.findById(userId)
-                .orElseThrow(NotFoundException.forUser(userId));
+    @CacheEvict(value = "saveCheckin")
+    public CheckinManualResponseDto saveChekin(CheckinManualRequestDto filter) {
+        UsuarioEntity usuario = validarUsuario(filter.getEmail());
 
         CheckinManualEntity checkin = CheckinManualEntity.builder()
                 .humor(filter.getHumor())
@@ -74,12 +73,21 @@ public class CheckinManualService {
                 .map(CheckinManualResponseDto::from);
     }
 
-    @CacheEvict(value = "historicoCheckin", key = "#userId")
-    public int deleteUserChekin(Long userId, LocalDateTime since) {
+    @CacheEvict(value = "historicoCheckin")
+    public int deleteUserChekin(Long userId, Long chekinId) {
         usuarioRepository.findById(userId)
                 .orElseThrow(NotFoundException.forUser(userId));
 
-        return checkinManualRepository.deleteByUsuarioIdAndPeriod(userId, since);
+        checkinManualRepository.findById(chekinId)
+                .orElseThrow(NotFoundException.forChekin(chekinId));
+
+        return checkinManualRepository.deleteByUsuarioIdAndChekinId(userId, chekinId);
+    }
+
+
+    private UsuarioEntity validarUsuario(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(NotFoundException.forEmail(email));
     }
 
 

@@ -21,5 +21,13 @@ public class NotFoundException extends RuntimeException{
         return () -> new NotFoundException("Id do dado sensorial não encontrado" + id);
     }
 
+    public static Supplier<NotFoundException> forEmail(String email) {
+        return () -> new NotFoundException("Email não encontrado" + email);
+    }
+
+    public static Supplier<NotFoundException> forChekin(Long id) {
+        return () -> new NotFoundException("Id do chekin não encontrado" + id);
+    }
+
 
 }

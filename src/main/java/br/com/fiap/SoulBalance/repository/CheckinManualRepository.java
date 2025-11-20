@@ -18,13 +18,8 @@ public interface CheckinManualRepository extends JpaRepository<CheckinManualEnti
             Long usuarioId
     );
 
-    @Modifying
     @Transactional
-    @Query("DELETE FROM CheckinManualEntity c WHERE c.usuario.id = :userId " +
-            "AND (:since IS NULL OR c.time >= :since)")
-    int deleteByUsuarioIdAndPeriod(
-            @Param("userId") Long userId,
-            @Param("since") LocalDateTime since
-    );
+    @Modifying
+    int deleteByUsuarioIdAndChekinId(Long usuarioId, Long chekinId);
 
 }
