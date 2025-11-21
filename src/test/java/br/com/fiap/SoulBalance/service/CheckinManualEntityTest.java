@@ -22,7 +22,7 @@ class CheckinManualEntityTest {
     @BeforeEach
     void setUp() {
         mockUsuario = UsuarioEntity.builder()
-                .userId(1L)
+                .id(1L)
                 .email("teste@fiap.com.br")
                 .nome("Test User")
                 .senha("encodedPass")
