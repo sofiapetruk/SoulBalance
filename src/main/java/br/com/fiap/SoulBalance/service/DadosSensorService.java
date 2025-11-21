@@ -48,31 +48,6 @@ public class DadosSensorService {
         return DadosSensorResponseDto.from(savedDado);
     }
 
-//    /**
-//     * Combina múltiplos registros de sensor (ex: várias leituras de BPM ao longo do dia)
-//     * para gerar um único valor diário (média/total) para uso na análise da IA.
-//     * Retorna um mapa de TipoDadoSensor para o valor agregado (ex: Média de BPM ou Total de Passos).
-//     */
-//    @Cacheable(value = "dadosAgregados", key = "{#userId, #data}")
-//    public Map<TipoDadoSensor, Double> agregarDadosDiarios(Long userId, LocalDate data) {
-//
-//        LocalDateTime inicioDoDia = data.atStartOfDay();
-//        LocalDateTime fimDoDia = data.plusDays(1).atStartOfDay().minusNanos(1);
-//
-//        List<DadosSensorEntity> dadosDoDia = dadosSensorRepository
-//                .findByUsuarioIdAndTimeBetween(userId, inicioDoDia, fimDoDia);
-//
-//        if (dadosDoDia.isEmpty()) {
-//            return Map.of();
-//        }
-//
-//        return dadosDoDia.stream()
-//                .collect(Collectors.groupingBy(
-//                        DadosSensorEntity::getTipoDado,
-//                        Collectors.averagingInt(DadosSensorEntity::getValor)
-//                ));
-//    }
-
     /**
      * Retorna todos os registros de dados de sensor para um usuário específico,
      * ordenados por data e hora (do mais recente para o mais antigo).

@@ -90,19 +90,4 @@ public class CheckinManualService {
                 .orElseThrow(NotFoundException.forEmail(email));
     }
 
-
-
-//    /**
-//     * CRUCIAL: Após salvar o check-in, este método é chamado para notificar
-//     * o AnaliseDiariaIAService para que ele comece a processar os dados do dia.
-//     * @param userId ID do usuário.
-//     * @param checkin Entidade Check-in recém-salva.
-//     */
-//    public void dispararAnaliseIA(Long userId, CheckinManualEntity checkin) {
-//
-//        // Chama o método no AnaliseDiariaIAService para iniciar o fluxo da IA
-//        analiseDiariaIAService.processarNovoCheckin(userId, checkin);
-//
-//        System.out.println("Análise IA disparada para o usuário: " + userId + " após Check-in.");
-//    }
 }

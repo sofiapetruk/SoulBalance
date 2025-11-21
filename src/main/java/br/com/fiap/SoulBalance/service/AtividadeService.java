@@ -88,33 +88,4 @@ public class AtividadeService {
                 .orElseThrow(NotFoundException.forEmail(email));
     }
 
-//    /**
-//     * Soma a duração de todas as atividades de tipo 'TRABALHO' no período.
-//     */
-//    public Double calcularCargaTrabalho(List<AtividadeEntity> atividades) {
-//        return atividades.stream()
-//                .filter(a -> a.getTipoAtividade() == TipoAtividade.TRABALHO_CRIATIVO)
-//                .collect(Collectors.summingInt(AtividadeEntity::getDuracaoMinutosAtividade));
-//    }
-//
-//    /**
-//     * Soma a duração de atividades 'DESCANSO' e 'LAZER' no período.
-//     */
-//    public Double calcularTempoRecuperacao(List<AtividadeEntity> atividades) {
-//        // Filtra por DESCANSO ou LAZER e soma a duração
-//        return atividades.stream()
-//                .filter(a -> a.getTipoAtividade() == TipoAtividade.DESCANSO_PASSIVO || a.getTipoAtividade() == TipoAtividade.LAZER_SOCIAL)
-//                .collect(Collectors.summingInt(AtividadeEntity::getDuracaoMinutosAtividade));
-//    }
-
-    //    /**
-//     * Método auxiliar para retornar entidades, usado internamente pelo RecomendacaoIAService.
-//     */
-//    @Cacheable(value = "historicoAtividadesEntity", key = "{#userId, #inicio, #fim}")
-//    public List<AtividadeEntity> buscarHistoricoPorPeriodoEntity(Long userId, LocalDateTime inicio, LocalDateTime fim) {
-//        return atividadeRepository
-//                .findByUsuarioIdAndInicioBetween(userId, inicio, fim);
-//    }
-
-
 }
